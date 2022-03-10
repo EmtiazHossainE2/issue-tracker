@@ -1,13 +1,3 @@
-const addValue = () => {
-  const issueValue = document.getElementById('tracker-value')
-
-  console.log(parseInt(issueValue.innerText));
-  // const totalIssue = parseInt(issueValue.innerText) + 1
-  // console.log(totalIssue);
-  const issuValue = localStorage.getItem('issues')
-  const parseIssue = JSON.parse(issuValue)
-  issueValue.innerText = parseIssue.length
-}
 
 document.getElementById('issueInputForm').addEventListener('submit', submitIssue);
 
@@ -29,7 +19,7 @@ function submitIssue(e) {
 
   document.getElementById('issueInputForm').reset();
   fetchIssues();
-  e.preventDefault();
+  countIssue()
 }
 
 const closeIssue = id => {
@@ -47,9 +37,7 @@ const deleteIssue = id => {
   remainingIssues.status = 'Delete';
   localStorage.setItem('issues', JSON.stringify(remainingIssues));
   fetchIssues();
-  //
-  const issueValue = document.getElementById('tracker-value')
-  issueValue.innerText = issues.length
+  countIssue()
 }
 
 const fetchIssues = () => {
@@ -74,3 +62,16 @@ const fetchIssues = () => {
   `;
   }
 }
+const countIssue = () => {
+  const issues = JSON.parse(localStorage.getItem('issues'));
+  let countTotal
+  if (issues.length) {
+    countTotal = issues.length
+  }
+  else {
+    countTotal = 0
+  }
+  const issueValue = document.getElementById('tracker-value')
+  issueValue.innerText = countTotal;
+}
+countIssue()
